@@ -1,5 +1,6 @@
 import React from 'react';
 import { features as netherlands_regions } from "../data/netherlands_regions.json";
+import { features as belgium_regions } from "../data/belgium_regions.json";
 import { features as france_regions } from "../data/france_regions.json";
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
@@ -35,6 +36,7 @@ const CovidMap = ({ regions }) => {
                     url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
                 />
                 {<GeoJSON style={mapStyle} data={france_regions} onEachFeature={onEachRegion} />}
+                {<GeoJSON style={mapStyle} data={belgium_regions} onEachFeature={onEachRegion} />}
                 {<GeoJSON style={mapStyle} data={regions} onEachFeature={onEachRegion} />}
                 {<GeoJSON style={mapStyle} data={netherlands_regions} onEachFeature={onEachRegion} />}
 
