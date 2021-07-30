@@ -1,4 +1,4 @@
-import { features } from "../data/germany_districts.json";
+import { features } from "../data/germany_regions.json";
 
 
 class LoadRegionalData {
@@ -21,13 +21,33 @@ class LoadRegionalData {
 
 
         // console.log(typeof (this.covidData));
-        // console.log(this.covidData);
+        console.log(this.covidData);
         // console.log(Object.values(this.covidData)[50].name);
-        for (let i = 0; i < Object.keys(this.covidData).length; i++) {
+        let countRegions = 0;
+        for (let i = 0; i < this.mapRegions.length; i++) {
             const mapDataRegion = this.mapRegions[i];
+
             //console.log(mapDataRegion);
-            const covidDataRegion = arr.find((covidDataRegion) => covidDataRegion.name === mapDataRegion.properties.NAME_3);
+            // if (mapDataRegion.properties.NAME_3 === "Gotha") {
+            //     console.log(mapDataRegion)
+            // }
+            const covidDataRegion = arr.find((region) => {
+
+                if (region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "") == mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "")
+
+                    || region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
+
+                    || mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(region.name.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
+                ) {
+                    return true;
+                }
+                else {
+                    return false;
+                };
+            }
+            );
             if (covidDataRegion) {
+                countRegions += 1;
                 let randomNum = Math.floor(covidDataRegion.cases / 1000);
                 //var regionColor = "#400000".replace(/0/g, function () { return (~~((covidDataRegion.cases / max_cases) * 16)).toString(16); });
                 var regionColor = "#003040".replace(/0/g, function () { return (~~((randomNum / 20) * 16)).toString(16); });
@@ -38,6 +58,7 @@ class LoadRegionalData {
             }
             // const specificRegion = germanyRegions.features.find((specificRegion) => { specificRegion.properties.NAME_3 === specificRegion.});
         }
+        console.log("Count is", countRegions);
 
         setRegions(this.mapRegions);
         //setCovidData(this.covidData.data);
