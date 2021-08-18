@@ -1,11 +1,10 @@
 
-import MapView from "./components/MapView";
+import ParentView from "./components/ParentView";
 import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <div>
-      <MapView />
-
+      <ParentView />
     </div>
   );
 }
