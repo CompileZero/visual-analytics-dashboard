@@ -14,7 +14,7 @@ const ParentView = () => {
 
     const load = () => {
         const germanyData = new GermanyData();
-        germanyData.load(setRegionsGermany);
+        germanyData.loadDailyData(setRegionsGermany);
 
         const netherlandsData = new NetherlandsData();
         netherlandsData.combineRegionalCovidData(setRegionsNetherlands);
@@ -26,8 +26,6 @@ const ParentView = () => {
         <div>
             {regionsGermany.length === 0 ? <Loading /> :
                 <div>
-                    {/* {console.log(`MapView.js - regionsGermany - ${regionsNetherlands[1]}`)} */}
-                    <Legend />
                     <CovidMap regionsGermany={regionsGermany} regionsNetherlands={regionsNetherlands} />
                 </div>}
         </div>
