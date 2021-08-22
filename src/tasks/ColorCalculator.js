@@ -16,18 +16,34 @@ function colorCalculatorDeaths(n) {
 
 function colorCalculatorCases(n) {
 
-    return n > 30000 ? '#360613'
-        : n > 20000 ? '#000000'
-            : n > 15000 ? '#190f00'
-                : n > 10000 ? '#331e00'
-                    : n > 7000 ? '#4c2d00'
-                        : n > 4000 ? '#663c00'
-                            : n > 2000 ? '#804b00'
-                                : n > 1000 ? '#b36800'
-                                    : n > 500 ? '#cc7700'
-                                        : n > 250 ? '#e68600'
-                                            : n > 100 ? '#ff9500'
-                                                : '#ffffff';
+    return n > 30000 ? '#081c15'
+        : n > 20000 ? '#1b4332'
+            : n > 15000 ? '#2d6a4f'
+                : n > 10000 ? '#40916c'
+                    : n > 5000 ? '#52b788'
+                        : n > 2000 ? '#74c69d'
+                            : n > 1000 ? '#95d5b2'
+                                : n > 500 ? '#b7e4c7'
+                                    : n > 100 ? '#d8f3dc'
+                                        : '#ffffff';
 }
 
-export { colorCalculatorCases, colorCalculatorDeaths };
+function colorCalculatorSevenDayCases(n) {
+
+    return n > 20 ? '#231942'
+        : n > 10 ? '#5e548e'
+            : n > 2 ? '#9f86c0'
+                : n > 1 ? '#be95c4'
+                    : '#e0b1cb';
+}
+
+function colorCalculatorSevenDayDeaths(n) {
+
+    return n > 20 ? '#ed903e'
+        : n > 10 ? '#ffab61'
+            : n > 2 ? '#ed903e'
+                : n > 1 ? '#ffab61'
+                    : '#ffab61';
+}
+
+export { colorCalculatorCases, colorCalculatorDeaths, colorCalculatorSevenDayCases, colorCalculatorSevenDayDeaths };
