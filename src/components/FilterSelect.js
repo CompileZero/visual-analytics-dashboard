@@ -7,12 +7,12 @@ const plans = [
         description: 'Region-wise daily cases',
     },
     {
-        name: 'Cases: 7 Day-Average',
-        description: 'Accumulated cases in the Past 7 days',
-    },
-    {
         name: 'Total Deaths',
         description: 'Region-wise daily cases',
+    },
+    {
+        name: 'Cases: 7 Day-Average',
+        description: 'Accumulated cases in the Past 7 days',
     },
     {
         name: 'Deaths: 7 Day-Average',
