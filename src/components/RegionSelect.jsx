@@ -4,22 +4,20 @@ import { Listbox, Transition } from "@headlessui/react";
 import NetherlandsData from "../tasks/NetherlandsData";
 // import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
-const country = [{ name: "All" }, { name: "Germany" }, { name: "Netherlands" }];
+const people = [{ name: "All" }, { name: "Germany" }, { name: "Netherlands" }];
 
-export default function CountrySelect({ setZoomSelect, setCountry }) {
-  const [selected, setSelected] = useState(country[0]);
+export default function RegionSelect({ setZoomSelect }) {
+  const [selected, setSelected] = useState(people[0]);
 
   useEffect(() => {
-    // console.log("Use effect called");
-    // console.log(selected);
-    // console.log(setCountry);
-    setCountry(selected.name);
-    if (selected.name == "All") {
+    console.log("Use effect called");
+    console.log(selected);
+    if (selected.name === "All") {
       setZoomSelect({ zoom: 6, center: [51, 10] });
     }
-    if (selected.name == "Germany") {
+    if (selected.name === "Germany") {
       setZoomSelect({ zoom: 8, center: [51, 10] });
-    } else if (selected.name == "Netherlands") {
+    } else if (selected.name === "Netherlands") {
       setZoomSelect({ zoom: 8, center: [52, 5] });
     }
   }, [selected]);
@@ -27,8 +25,7 @@ export default function CountrySelect({ setZoomSelect, setCountry }) {
   return (
     <Listbox value={selected} onChange={setSelected}>
       <div className="relative mt-1">
-        <h3 className="text-xl font-bold my-4 text-black">View Country</h3>
-        <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white border-gray-500 border-2 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+        <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
           <span className="block truncate">{selected.name}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             {/* <SelectorIcon
@@ -44,7 +41,7 @@ export default function CountrySelect({ setZoomSelect, setCountry }) {
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {country.map((person, personIdx) => (
+            {people.map((person, personIdx) => (
               <Listbox.Option
                 key={personIdx}
                 className={({ active }) =>
