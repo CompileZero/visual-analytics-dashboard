@@ -19,34 +19,13 @@ import { mapStyle, mapStyleBorder } from "./CovidMap.style";
 import Chart from "../Chart";
 import CountrySelect from "../CountrySelect";
 import FilterSelect from "../FilterSelect";
+import Legend from "../Legend";
 // import { features as netherlands_regions } from "../data/netherlands_regions.json";
 // import { features as belgium_regions } from "../data/belgium_regions.json";
 // import { features as france_regions } from "../data/france_regions.json";
 // import { features as germany_border } from "../data/germany_border.json";
 // import { features as netherlands_border } from "../data/netherlands_border.json";
 import { RadioGroup } from "@headlessui/react";
-
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "./CovidMap.css";
-import FilterSelect from "../FilterSelect";
-
-import CountrySelect from "../CountrySelect";
-
-import Chart from "../Chart";
-import {
-  colorCalculatorDeaths,
-  colorCalculatorCases,
-  colorCalculatorSevenDayCases,
-  colorCalculatorSevenDayDeaths,
-} from "../../tasks/ColorCalculator.js";
-import {
-  onEachRegion,
-  clickToZoomFeature,
-  onEachRegionNetherlands,
-} from "./CovidMap.utils";
-import { mapStyle, mapStyleBorder } from "./CovidMap.style";
-import Legend from "../Legend";
 import borderData from "../../data/europe30percent.json";
 
 const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
@@ -71,6 +50,7 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
   let [region, setRegion] = useState("No Region");
   let keyMap1 = React.useMemo(() => Math.random());
   let keyMap2 = React.useMemo(() => Math.random());
+  let keyMap3 = React.useMemo(() => Math.random());
 
   const onEachRegion = (region, layer) => {
     if (!region.properties.cases) {
@@ -181,65 +161,6 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
     } else if (metric == "Cases: 7 Day-Average") {
       layer.options.fillColor = colorCalculatorSevenDayCases(sevenDayCases);
     } else if (metric == "Deaths: 7 Day-Average") {
-      layer.options.fillColor = colorCalculatorSevenDayDeaths(sevenDayDeaths);
-    }
-
-    const name = region.properties.NAME_2;
-    // const cases = historyData[6]["Total_reported"]
-    const confirmedText = historyData[6]["Total_reported"];
-    const hospital_admission = historyData[6]["Hospital_admission"];
-    const deceased = historyData[6]["Deceased"];
-
-    layer.on("click", function (e) {
-      // setChartData({ data: [1, 2, 3, 4, 5], labels: [2, 3, 4, 5, 6] });
-      // map.fitBounds(layer.getBounds());
-
-      // setZoomSelect({ center: map.getCenter(), zoom: map.getZoom() });
-      // map.setBounds(layer.getBounds());
-      let bounds = layer.getBounds();
-      setZoomSelect({ center: bounds.getCenter(), zoom: 10 });
-      setChartData(region.properties.history_cases);
-      console.log(region.properties.history_cases);
-      console.log(region.properties.history_deaths);
-      // console.log(layer.getBounds());
-    });
-
-    // layer.on({
-    //     click: clickToZoomFeature
-    // });
-  };
-
-  const clickToZoomFeature = () => {
-    console.log("This is clicked!");
-  };
-
-  const onEachRegionNetherlands = (region, layer) => {
-    if (!region.properties["History_data"]) {
-      layer.options.color = "";
-      layer.options.fillOpacity = 0;
-      return;
-    }
-
-    let historyData = region.properties["History_data"];
-
-    let sevenDayCases = (
-      (historyData[6]["Total_reported"] - historyData[0]["Total_reported"]) /
-      7
-    ).toFixed(2);
-    let sevenDayDeaths = (
-      (historyData[6]["Deceased"] - historyData[0]["Deceased"]) /
-      7
-    ).toFixed(2);
-
-    if (metric === "Total Cases") {
-      let cases = historyData[6]["Total_reported"];
-      layer.options.fillColor = colorCalculatorCases(cases);
-    } else if (metric === "Total Deaths") {
-      let deaths = historyData[6]["Deceased"];
-      layer.options.fillColor = colorCalculatorDeaths(deaths);
-    } else if (metric === "Cases: 7 Day-Average") {
-      layer.options.fillColor = colorCalculatorSevenDayCases(sevenDayCases);
-    } else if (metric === "Deaths: 7 Day-Average") {
       layer.options.fillColor = colorCalculatorSevenDayDeaths(sevenDayDeaths);
     }
 
