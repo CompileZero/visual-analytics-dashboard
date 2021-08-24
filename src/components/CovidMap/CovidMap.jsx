@@ -12,7 +12,7 @@ import "./CovidMap.css";
 import FilterSelect from "../FilterSelect";
 
 import CountrySelect from "../CountrySelect";
-import RegionSelect from "../RegionSelect";
+
 import Chart from "../Chart";
 import { colorCalculatorDeaths, colorCalculatorCases, colorCalculatorSevenDayCases, colorCalculatorSevenDayDeaths } from "../../tasks/ColorCalculator.js";
 import {
@@ -24,22 +24,15 @@ import {
     mapStyle,
     mapStyleBorder
 } from './CovidMap.style';
+import Legend from "../Legend";
 
 const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
-    const {
-        prevDay,
-        seventhDay
-    } = React.memo(() => {
-        const today = new Date();
-        today.setDate(today.getDate() - 1);
-        let prevDay = today.toISOString().split("T")[0];
-        today.setDate(today.getDate() - 7);
-        let seventhDay = today.toISOString().split("T")[0];
-        return {
-            prevDay,
-            seventhDay
-        };
-    });
+
+    const today = new Date();
+    today.setDate(today.getDate() - 1);
+    let prevDay = today.toISOString().split("T")[0];
+    today.setDate(today.getDate() - 7);
+    let seventhDay = today.toISOString().split("T")[0];
 
     let map = null;
 
@@ -47,13 +40,16 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
         map = mapInstance;
     };
 
-    let [metric, setMetric] = useState('Cases');
+    let [metric, setMetric] = useState('Total Cases');
     let [zoomSelect, setZoomSelect] = useState({});
 
-    let [chartData, setChartData] = useState([]);
+    let [chartData, setChartData] = useState({});
+    let [country, setCountry] = useState('All');
 
+    let [region, setRegion] = useState('No Region');
     let keyMap1 = React.useMemo(() => Math.random());
     let keyMap2 = React.useMemo(() => Math.random());
+
 
     const onEachRegion = (region, layer) => {
         if (!region.properties.cases) {
@@ -119,22 +115,17 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
 
         layer.on('click', function (e) {
 
-            // setChartData({ data: [1, 2, 3, 4, 5], labels: [2, 3, 4, 5, 6] });
-            // map.fitBounds(layer.getBounds());
-
-            // setZoomSelect({ center: map.getCenter(), zoom: map.getZoom() });
-            // map.setBounds(layer.getBounds());
             let bounds = layer.getBounds();
+            setRegion(name);
+            setChartData({ data: region.properties.history_cases, country: 'Germany' });
+
             setZoomSelect({ center: bounds.getCenter(), zoom: 10 });
-            setChartData(region.properties.history_cases);
-            console.log(region.properties.history_cases);
-            console.log(region.properties.history_deaths);
-            // console.log(layer.getBounds());
+
         });
 
-        // layer.on({
-        //     click: clickToZoomFeature
-        // });
+        layer.on('mouseout', function (e) {
+            layer.closePopup();
+        });
 
     };
 
@@ -203,6 +194,16 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
                 { minWidth: 80 }).openPopup(e.latlng);
         });
 
+        layer.on('click', function (e) {
+
+            let bounds = layer.getBounds();
+            setRegion(name);
+
+            setChartData({ data: historyData, country: 'Netherlands' });
+            setZoomSelect({ center: bounds.getCenter(), zoom: 10 });
+
+        });
+
 
 
         layer.on('mouseout', function (e) {
@@ -221,15 +222,14 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
                     <h6 className="text-yellow-400 text-center font-bold text-sm">{seventhDay} to {prevDay}</h6>
                     <hr />
 
-                    <CountrySelect setZoomSelect={setZoomSelect} />
-                    <div>
-                        {/* <RegionSelect className="bg-gray-800" setZoomSelect={setZoomSelect} /> */}
-                    </div>
+                    <CountrySelect setZoomSelect={setZoomSelect} setCountry={setCountry} />
+                    <Legend metric={metric} />
+
                 </div>
                 <div className="col-span-5">
                     <MapContainer
                         key={keyMap2} className="m-4"
-                        style={{ height: "70vh", width: "80vw" }}
+                        style={{ height: "60vh", width: "80vw" }}
                         zoom={zoomSelect.zoom} center={zoomSelect.center}
                         whenCreated={setMap}
                     >
@@ -237,7 +237,9 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
                         <GeoJSON key={keyMap1} style={mapStyle} data={regionsGermany} onEachFeature={(region, layer) => onEachRegion(region, layer)} />
                         <GeoJSON key={keyMap2} style={mapStyle} data={regionsNetherlands} onEachFeature={(region, layer) => onEachRegionNetherlands(region, layer)} />
                     </MapContainer>
-                    <Chart chartData={chartData} />
+                    <h3 className="text-base font-bold text-gray-500">Average Cases Forecasting: {country}</h3>
+                    <h3 className="text-sm font-bold text-yellow-500">Region: {region}</h3>
+                    <Chart className="h-24" chartData={chartData} />
                 </div>
             </div>
         </div >
