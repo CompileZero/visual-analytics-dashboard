@@ -8,5 +8,6 @@ export const mapStyleBorder = {
   stroke: "black",
   color: "#474444",
   weight: 2,
-  opacity: 0.5,
+  opacity: 0.8,
+  fillOpacity: 0,
 };
