@@ -39,8 +39,8 @@ function colorCalculatorSevenDayCases(n) {
 
 function colorCalculatorSevenDayDeaths(n) {
 
-    return n > 20 ? '#ed903e'
-        : n > 10 ? '#ffab61'
+    return n > 20 ? '#91521a'
+        : n > 10 ? '#bf702a'
             : n > 2 ? '#ed903e'
                 : n > 1 ? '#ffab61'
                     : '#ffab61';
