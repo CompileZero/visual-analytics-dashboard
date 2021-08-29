@@ -13,7 +13,7 @@ class NetherlandsData {
 
     async combineRegionalCovidData(setRegionsNetherlands) {
         // let covidData = [];
-        let covidData = await this.getCovidData("http://localhost:8080/nldata");
+        let covidData = await this.getCovidData("https://va-dashboard-backend-compilezero.vercel.app/");
         let countRegions = 0;
 
         let combinedData = JSON.parse(JSON.stringify(regionData));
