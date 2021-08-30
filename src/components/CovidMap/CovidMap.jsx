@@ -240,7 +240,10 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
                     <h3 className="text-base font-bold text-gray-500">Average Cases Forecasting: {country}</h3>
                     <h3 className="text-sm font-bold text-yellow-500">Region: {region}</h3>
                     <Chart className="h-24" chartData={chartData} />
+
+                    <p className=" mt-2 text-sm font-semibold text-gray-400 text-center">This application is built on ReactJS, Leaflet and Express. FullStack development by Atharva Kulkarni - MSc Aritificial Intelligence</p>
                 </div>
+
             </div>
         </div >
     );
