@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 // import { features as netherlands_regions } from "../data/netherlands_regions.json";
 // import { features as belgium_regions } from "../data/belgium_regions.json";
 // import { features as france_regions } from "../data/france_regions.json";
 // import { features as germany_border } from "../data/germany_border.json";
 // import { features as netherlands_border } from "../data/netherlands_border.json";
-import { RadioGroup } from '@headlessui/react';
-
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import "./CovidMap.css";
@@ -16,13 +14,7 @@ import CountrySelect from "../CountrySelect";
 import Chart from "../Chart";
 import { colorCalculatorDeaths, colorCalculatorCases, colorCalculatorSevenDayCases, colorCalculatorSevenDayDeaths } from "../../tasks/ColorCalculator.js";
 import {
-    onEachRegion,
-    clickToZoomFeature,
-    onEachRegionNetherlands
-} from './CovidMap.utils';
-import {
-    mapStyle,
-    mapStyleBorder
+    mapStyle
 } from './CovidMap.style';
 import Legend from "../Legend";
 
@@ -76,17 +68,17 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
         }
 
 
-        if (metric == "Total Cases") {
+        if (metric === "Total Cases") {
             layer.options.fillColor = colorCalculatorCases(region.properties.cases);
         }
-        else if (metric == "Total Deaths") {
+        else if (metric === "Total Deaths") {
             layer.options.fillColor = colorCalculatorDeaths(region.properties.deaths);
         }
 
-        else if (metric == "Cases: 7 Day-Average") {
+        else if (metric === "Cases: 7 Day-Average") {
             layer.options.fillColor = colorCalculatorSevenDayCases(sevenDayCases);
         }
-        else if (metric == "Deaths: 7 Day-Average") {
+        else if (metric === "Deaths: 7 Day-Average") {
             layer.options.fillColor = colorCalculatorSevenDayDeaths(sevenDayDeaths);
 
         }
@@ -129,11 +121,6 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
 
     };
 
-    const clickToZoomFeature = () => {
-
-        console.log("This is clicked!");
-    };
-
     const onEachRegionNetherlands = (region, layer) => {
 
         if (!region.properties["History_data"]) {
@@ -148,24 +135,22 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
         let sevenDayCases = ((historyData[6]["Total_reported"] - historyData[0]["Total_reported"]) / 7).toFixed(2);
         let sevenDayDeaths = ((historyData[6]["Deceased"] - historyData[0]["Deceased"]) / 7).toFixed(2);
 
-        if (metric == "Total Cases") {
+        if (metric === "Total Cases") {
 
             let cases = historyData[6]["Total_reported"];
             layer.options.fillColor = colorCalculatorCases(cases);
 
         }
-        else if (metric == "Total Deaths") {
+        else if (metric === "Total Deaths") {
 
             let deaths = historyData[6]["Deceased"];
             layer.options.fillColor = colorCalculatorDeaths(deaths);
-
         }
 
-        else if (metric == "Cases: 7 Day-Average") {
-
+        else if (metric === "Cases: 7 Day-Average") {
             layer.options.fillColor = colorCalculatorSevenDayCases(sevenDayCases);
         }
-        else if (metric == "Deaths: 7 Day-Average") {
+        else if (metric === "Deaths: 7 Day-Average") {
             layer.options.fillColor = colorCalculatorSevenDayDeaths(sevenDayDeaths);
         }
 
@@ -239,14 +224,16 @@ const CovidMap = ({ regionsGermany, regionsNetherlands }) => {
                     </MapContainer>
                     <h3 className="text-base font-bold text-gray-500">Average Cases Forecasting: {country}</h3>
                     <h3 className="text-sm font-bold text-yellow-500">Region: {region}</h3>
+                    {console.log("CHartData", chartData)}
                     <Chart className="h-24" chartData={chartData} />
-
-                    <p className=" mt-2 text-sm font-semibold text-gray-400 text-center">This application is built on ReactJS, Leaflet and Express. FullStack development by Atharva Kulkarni - MSc Aritificial Intelligence</p>
+                    <p className="mb-2 text-sm font-semibold text-gray-400 text-center">This application is built on ReactJS, Leaflet and Express. FullStack development by Atharva Kulkarni - MSc Aritificial Intelligence</p>
+                    <div className="flex h-100 items-end">
+                    </div>
                 </div>
-
             </div>
         </div >
     );
 };
 
-export default React.memo(CovidMap);
+// export default React.memo(CovidMap);
+export default CovidMap;

@@ -100,8 +100,10 @@ const Chart = ({ chartData = {} }) => {
 
     return (
         <div>
-            <Line height={50} data={data} options={options} />
-
+            {Object.keys(data).length !== 0 ?
+                <Line height={50} data={data} options={options} />
+                : <h1 className="mt-2 text-xs font-bold text-gray-400 text-center">Please click on a region to show chart data!</h1>}
+            {console.log(data)}
         </div>
     );
 };

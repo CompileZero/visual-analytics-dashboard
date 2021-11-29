@@ -36,9 +36,6 @@ class GermanyData {
         await this.getCovidDataCases("https://api.corona-zahlen.org/districts/history/cases/30");
         await this.getCovidDataDeaths("https://api.corona-zahlen.org/districts/history/deaths/30");
 
-
-
-
         let arrCovidData = Object.values(this.covidData);
         let arrCovidDataCases = Object.values(this.covidDataCases);
         let arrCovidDataDeaths = Object.values(this.covidDataDeaths);
@@ -54,7 +51,7 @@ class GermanyData {
 
             const covidDataRegion = arrCovidData.find((region) => {
 
-                if (region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "") == mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "")
+                if (region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "") === mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "")
                     || region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
                     || mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(region.name.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
                 ) {
@@ -71,7 +68,7 @@ class GermanyData {
                 // console.log(arrCovidDataDeaths);
 
                 let covidDataRegionCases = arrCovidDataCases.find((region) => {
-                    if (region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "") == mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "")
+                    if (region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "") === mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "")
                         || region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
                         || mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(region.name.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
                     ) {
@@ -83,7 +80,7 @@ class GermanyData {
                 });
 
                 let covidDataRegionDeaths = arrCovidDataDeaths.find((region) => {
-                    if (region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "") == mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "")
+                    if (region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "") === mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "")
                         || region.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
                         || mapDataRegion.properties.NAME_3.normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(region.name.normalize("NFD").replace(/\p{Diacritic}/gu, ""), 0)
                     ) {
@@ -114,6 +111,7 @@ class GermanyData {
         }
         console.log("Count is", countRegions);
 
+        console.log(this.mapRegions);
         setRegions(this.mapRegions);
         //setCovidData(this.covidData.data);
     };

@@ -21,7 +21,7 @@ class NetherlandsData {
             let currentRegion = regionData[i];
 
             let currentCovidData = covidData.find((covidData) => {
-                if (covidData["Municipality_name"] == currentRegion.properties["NAME_2"]) {
+                if (covidData["Municipality_name"] === currentRegion.properties["NAME_2"]) {
                     return true;
                 }
                 else {
